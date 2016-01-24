@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#00838F</color>
+    <color name="primary_dark">#006064</color>
+    <color name="primary_light">#4295a8</color>
+    <color name="accent">#4295a8</color>
+    <color name="accent_light">#00838F</color>
+    <color name="row_ripple">#6600838F</color>
+    <color name="row_ripple_ap">#8700838F</color>
+
+    <color name="fab_color">#69CFE7</color>
+    <color name="black_semi_transparent">#B2000000</color>
+    <color name="black_eighty_seven">#87000000</color>
+    <color name="black_35_percent">#59000000</color>
+    <color name="black_75_percent">#BF000000</color>
+    <color name="black_33">#333333</color>
+    <color name="black_99">#999999</color>
+    <color name="black_66">#666666</color>
+    <color name="transparent">#00ffffff</color>
+
+</resources>

@@ -3,7 +3,9 @@ package it.jaschke.alexandria.api;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.support.v4.widget.CursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +14,18 @@ import android.widget.TextView;
 
 import it.jaschke.alexandria.R;
 import it.jaschke.alexandria.data.AlexandriaContract;
+import it.jaschke.alexandria.data.DbHelper;
 import it.jaschke.alexandria.services.DownloadImage;
 
 /**
- * Created by saj on 11/01/15.
+ * Created by aditlal on 20/01/16.
  */
 public class BookListAdapter extends CursorAdapter {
 
+
+    private String TAG = "BooksListAdapter";
+    DbHelper mDBHelper;
+    Context c;
 
     public static class ViewHolder {
         public final ImageView bookCover;
@@ -34,6 +41,7 @@ public class BookListAdapter extends CursorAdapter {
 
     public BookListAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
+        this.c = context;
     }
 
     @Override
@@ -60,4 +68,26 @@ public class BookListAdapter extends CursorAdapter {
 
         return view;
     }
-}
+
+    public Cursor fetchBooksByName(String inputText) throws SQLException {
+        Log.w(TAG, inputText);
+        mDBHelper = new DbHelper(c);
+        Cursor mCursor = null;
+        final String selection = AlexandriaContract.BookEntry.TITLE + " LIKE ? OR " + AlexandriaContract.BookEntry.SUBTITLE + " LIKE ? ";
+        if (inputText == null || inputText.length() == 0) {
+            mCursor = mDBHelper.getReadableDatabase().query(AlexandriaContract.BookEntry.TABLE_NAME, null,
+                    selection, null, null, null, null);
+
+        } else {
+            mCursor = mDBHelper.getReadableDatabase().query(true, AlexandriaContract.BookEntry.TABLE_NAME, null,
+                    selection, null,
+                    null, null, null, null);
+            }
+            if (mCursor != null) {
+                mCursor.moveToFirst();
+            }
+            return mCursor;
+
+        }
+
+    }

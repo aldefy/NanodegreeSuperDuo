@@ -1,13 +1,12 @@
 package it.jaschke.alexandria.data;
 
 /**
- * Created by saj on 22/12/14.
+ * Created by aditlal on 20/01/16.
  */
 
 import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
-import android.util.Log;
 
 public class AlexandriaContract{
 

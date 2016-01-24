@@ -6,7 +6,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * Created by saj on 23/12/14.
+ * Created by aditlal on 23/12/14.
  */
 public class FullTestSuite extends TestSuite {
     public static Test suite() {
