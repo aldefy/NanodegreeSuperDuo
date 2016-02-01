@@ -25,7 +25,9 @@ import com.google.android.gms.vision.Tracker;
 import com.google.android.gms.vision.barcode.Barcode;
 
 import it.jaschke.alexandria.ui.camera.GraphicOverlay;
-
+/**
+ * Created by aditlal on 20/01/16.
+ */
 /**
  * Factory for creating a tracker and associated graphic to be associated with a new barcode.  The
  * multi-processor uses this factory to create barcode trackers as needed -- one for each barcode.

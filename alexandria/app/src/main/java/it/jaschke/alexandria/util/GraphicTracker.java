@@ -19,7 +19,9 @@ import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.Tracker;
 
 import it.jaschke.alexandria.ui.camera.GraphicOverlay;
-
+/**
+ * Created by aditlal on 20/01/16.
+ */
 /**
  * Generic tracker which is used for tracking either a face or a barcode (and can really be used for
  * any type of item).  This is used to receive newly detected items, add a graphical representation

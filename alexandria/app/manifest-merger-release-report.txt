@@ -47,7 +47,6 @@ category#android.intent.category.LAUNCHER
 ADDED from AndroidManifest.xml:18:17
 	android:name
 		ADDED from AndroidManifest.xml:18:27
-activity#it.jaschke.alexandria.SettingsActivity
 ADDED from AndroidManifest.xml:21:9
 	android:label
 		ADDED from AndroidManifest.xml:22:13

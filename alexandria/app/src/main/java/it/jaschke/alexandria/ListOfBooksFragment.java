@@ -8,12 +8,14 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FilterQueryProvider;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import butterknife.Bind;
@@ -67,21 +69,27 @@ public class ListOfBooksFragment extends Fragment implements LoaderManager.Loade
 
         View rootView = inflater.inflate(R.layout.fragment_list_of_books, container, false);
         ButterKnife.bind(this, rootView);
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                ListOfBooksFragment.this.restartLoader();
-                return false;
-            }
-        });
 
         EditText searchEditText = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
         searchEditText.setTextColor(blackSemiTransColor);
-        listViewBooks.setAdapter(bookListAdapter);
         bookListAdapter.setFilterQueryProvider(new FilterQueryProvider() {
             @Override
             public Cursor runQuery(CharSequence constraint) {
                 return bookListAdapter.fetchBooksByName(constraint.toString());
+            }
+        });
+        searchView.setOnQueryTextListener(ListOfBooksFragment.this);
+        searchView.setSubmitButtonEnabled(true);
+        listViewBooks.setAdapter(bookListAdapter);
+        ImageView closeButton = (ImageView) searchView.findViewById(R.id.search_close_btn);
+        // Set on click listener
+        closeButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                searchString = "";
+                ListOfBooksFragment.this.restartLoader();
+                searchView.setQuery("",false); //clear the text
             }
         });
         listViewBooks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -107,7 +115,6 @@ public class ListOfBooksFragment extends Fragment implements LoaderManager.Loade
 
         final String selection = AlexandriaContract.BookEntry.TITLE + " LIKE ? OR " + AlexandriaContract.BookEntry.SUBTITLE + " LIKE ? ";
 
-        searchView.setOnQueryTextListener(ListOfBooksFragment.this);
 
         if (searchString.length() > 0) {
             searchString = "%" + searchString + "%";
@@ -158,13 +165,17 @@ public class ListOfBooksFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public boolean onQueryTextSubmit(String query) {
+        Log.d("Search", "onQueryTextSubmit " + searchString + " " + query);
+        ListOfBooksFragment.this.restartLoader();
+
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
         searchString = newText;
-        bookListAdapter.getFilter().filter(newText);
+        Log.d("Search", "onQueryTextChange " + searchString + "");
+        // bookListAdapter.getFilter().filter(newText);
         return false;
     }
 }
