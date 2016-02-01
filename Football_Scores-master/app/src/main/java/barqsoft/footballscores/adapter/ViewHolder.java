@@ -1,11 +1,13 @@
-package barqsoft.footballscores;
+package barqsoft.footballscores.adapter;
 
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import barqsoft.footballscores.R;
+
 /**
- * Created by yehya khaled on 2/26/2015.
+ * Created by aditlal on 2/26/2015.
  */
 public class ViewHolder
 {
