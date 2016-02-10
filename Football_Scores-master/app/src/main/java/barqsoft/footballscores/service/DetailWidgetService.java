@@ -11,7 +11,7 @@ import android.widget.RemoteViewsService;
 
 import barqsoft.footballscores.R;
 import barqsoft.footballscores.data.DatabaseContract;
-import barqsoft.footballscores.utils.Utilies;
+import barqsoft.footballscores.utils.CommonUtils;
 
 /**
  * Created by aditlal on 20/08/15.
@@ -56,7 +56,7 @@ public class DetailWidgetService extends RemoteViewsService {
 
                 Uri dateUri = DatabaseContract.scores_table.buildScoreWithDate();
                 String[] date = new String[1];
-                date[0] = Utilies.getFragmentDate(0);
+                date[0] = CommonUtils.getFragmentDate(0);
                 data = getContentResolver().query(dateUri, SCORE_COLUMNS, DatabaseContract.PATH_DATE, date, null);
                 Binder.restoreCallingIdentity(identityToken);
             }

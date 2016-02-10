@@ -12,6 +12,9 @@ android {
         versionName "1.0"
     }
     buildTypes {
+        applicationVariants.all { variant ->
+            variant.buildConfigField "String", "API_KEY", "\"" + getApiKey() + "\""
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -19,7 +22,20 @@ android {
     }
 }
 
+def getApiKey() {
+    def Properties props = new Properties()
+    props.load(new FileInputStream(new File('secrets.properties')))
+    return props['API_KEY']
+}
+
 dependencies {
+    //Support and other tasks
     compile 'com.android.support:appcompat-v7:23.1.1'
+
+    //UI
     compile 'com.jakewharton:butterknife:7.0.1'
+    
+    //Network
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.squareup.okhttp:okhttp:2.5.0'
 }

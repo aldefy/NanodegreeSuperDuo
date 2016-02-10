@@ -16,7 +16,7 @@ import android.widget.RemoteViews;
 import barqsoft.footballscores.data.DatabaseContract;
 import barqsoft.footballscores.activity.MainActivity;
 import barqsoft.footballscores.R;
-import barqsoft.footballscores.utils.Utilies;
+import barqsoft.footballscores.utils.CommonUtils;
 import barqsoft.footballscores.widgets.ScoreApp;
 
 /**
@@ -57,7 +57,7 @@ public class ScoreWidgetIntentService extends IntentService implements LoaderMan
         Uri dateUri = DatabaseContract.scores_table.buildScoreWithDate();
         // Log.i("INFO", "DATE URI: " + dateUri.toString());
         String[] date = new String[1];
-        date[0] = Utilies.getFragmentDate(0);
+        date[0] = CommonUtils.getFragmentDate(0);
         Cursor data = getContentResolver().query(dateUri, SCORE_COLUMNS, DatabaseContract.PATH_DATE, date, null);
 
         if (data == null) {
@@ -86,7 +86,7 @@ public class ScoreWidgetIntentService extends IntentService implements LoaderMan
             RemoteViews views = new RemoteViews(getPackageName(), R.layout.score_app_widget);
             Log.i("INFO", "HOME NAME " + homeName);
             Log.i("INFO", "AWAY NAME " + awayName);
-            String scores = Utilies.getScores(homeScore, awayScore);
+            String scores = CommonUtils.getScores(homeScore, awayScore);
             Log.i("INFO", "SCORES " + scores);
 
             if (homeName != null && awayName != null && scores != null) {

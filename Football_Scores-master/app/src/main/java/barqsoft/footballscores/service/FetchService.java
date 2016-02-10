@@ -22,8 +22,8 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.Vector;
 
+import barqsoft.footballscores.BuildConfig;
 import barqsoft.footballscores.data.DatabaseContract;
-import barqsoft.footballscores.R;
 
 /**
  * Created by aditlal on 3/2/2015.
@@ -34,6 +34,7 @@ public class FetchService extends IntentService {
 
     public FetchService() {
         super("FetchService");
+        Log.d(LOG_TAG,"FetchService is called");
     }
 
     @Override
@@ -62,7 +63,7 @@ public class FetchService extends IntentService {
             URL fetch = new URL(fetch_build.toString());
             m_connection = (HttpURLConnection) fetch.openConnection();
             m_connection.setRequestMethod("GET");
-            m_connection.addRequestProperty("X-Auth-Token", getString(R.string.api_key));
+            m_connection.addRequestProperty("X-Auth-Token", BuildConfig.API_KEY);
             m_connection.connect();
             Log.v(LOG_TAG, "We have connected");
 
@@ -114,7 +115,7 @@ public class FetchService extends IntentService {
                 if (matches.length() == 0) {
                     //if there is no data, call the function on dummy data
                     //this is expected behavior during the off season.
-                    processJSONdata(getString(R.string.dummy_data), getApplicationContext(), false);
+                   // processJSONdata(getString(R.string.dummy_data), getApplicationContext(), false);
                     return;
                 }
 
@@ -268,7 +269,7 @@ public class FetchService extends IntentService {
         }
     }
 
-    public void populateWidget(){
+    public void populateWidget() {
         Intent data = new Intent(ACTION_DATA_UPDATED);
         sendBroadcast(data);
     }

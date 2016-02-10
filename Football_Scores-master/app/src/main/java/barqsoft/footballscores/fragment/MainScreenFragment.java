@@ -1,6 +1,5 @@
 package barqsoft.footballscores.fragment;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,12 +12,22 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import barqsoft.footballscores.data.DatabaseContract;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import barqsoft.footballscores.R;
-import barqsoft.footballscores.adapter.ViewHolder;
 import barqsoft.footballscores.activity.MainActivity;
 import barqsoft.footballscores.adapter.ScoresAdapter;
-import barqsoft.footballscores.service.FetchService;
+import barqsoft.footballscores.adapter.ViewHolder;
+import barqsoft.footballscores.api.ApiGenerator;
+import barqsoft.footballscores.api.FootballMatchesApi;
+import barqsoft.footballscores.data.DatabaseContract;
+import barqsoft.footballscores.utils.CommonUtils;
+import barqsoft.footballscores.utils.Logger;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -28,13 +37,55 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
     public static final int SCORES_LOADER = 0;
     private String[] fragmentdate = new String[1];
     private int last_selected_item = -1;
+    FootballMatchesApi footballMatchesApi;
 
     public MainScreenFragment() {
     }
 
     private void update_scores() {
-        Intent service_start = new Intent(getActivity(), FetchService.class);
-        getActivity().startService(service_start);
+        footballMatchesApi = ApiGenerator.createService(FootballMatchesApi.class);
+
+        footballMatchesApi.getMatchesForTimeFrame("p2", new Callback<Response>() {
+            @Override
+            public void success(Response response, Response response2) {
+                JSONObject object = null;
+                try {
+                    object = new JSONObject(new String(((TypedByteArray) response.getBody()).getBytes()));
+                    Logger.d("Response", "p2" + object.toString());
+                    CommonUtils.processJSONdata(object.toString(), getActivity(), true);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+        footballMatchesApi.getMatchesForTimeFrame("n2", new Callback<Response>() {
+            @Override
+            public void success(Response response, Response response2) {
+                JSONObject object = null;
+                try {
+                    object = new JSONObject(new String(((TypedByteArray) response.getBody()).getBytes()));
+                    Logger.d("Response", "n2" + object.toString());
+                    CommonUtils.processJSONdata(object.toString(), getActivity(), true);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+      /*  Intent service_start = new Intent(getActivity(), FetchService.class);
+        getActivity().startService(service_start);*/
     }
 
     public void setFragmentDate(String date) {
@@ -44,10 +95,10 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
-        update_scores();
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         final ListView score_list = (ListView) rootView.findViewById(R.id.scores_list);
+        update_scores();
         mAdapter = new ScoresAdapter(getActivity(), null, 0);
         score_list.setAdapter(mAdapter);
         getLoaderManager().initLoader(SCORES_LOADER, null, this);
