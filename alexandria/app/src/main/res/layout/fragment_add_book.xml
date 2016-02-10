@@ -117,6 +117,7 @@
                 android:text="@string/cancel_button"
                 android:textColor="@color/black_semi_transparent"
                 android:visibility="invisible"
+                tools:visibility="visible"
                 />
 
             <Button
@@ -130,6 +131,7 @@
                 android:text="@string/ok_button"
                 android:textColor="@color/black_semi_transparent"
                 android:visibility="invisible"
+                tools:visibility="visible"
                 />
 
         </LinearLayout>
