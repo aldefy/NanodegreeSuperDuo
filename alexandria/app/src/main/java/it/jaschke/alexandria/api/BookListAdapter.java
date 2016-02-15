@@ -51,7 +51,9 @@ public class BookListAdapter extends CursorAdapter {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
         String imgUrl = cursor.getString(cursor.getColumnIndex(AlexandriaContract.BookEntry.IMAGE_URL));
-        Picasso.with(context).load(imgUrl).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(viewHolder.bookCover);
+
+        if (imgUrl != null && !imgUrl.isEmpty())
+            Picasso.with(context).load(imgUrl).placeholder(R.drawable.ic_launcher).error(R.drawable.ic_launcher).into(viewHolder.bookCover);
 
         String bookTitle = cursor.getString(cursor.getColumnIndex(AlexandriaContract.BookEntry.TITLE));
         viewHolder.bookTitle.setText(bookTitle);
@@ -83,12 +85,12 @@ public class BookListAdapter extends CursorAdapter {
             mCursor = mDBHelper.getReadableDatabase().query(true, AlexandriaContract.BookEntry.TABLE_NAME, null,
                     selection, null,
                     null, null, null, null);
-            }
-            if (mCursor != null) {
-                mCursor.moveToFirst();
-            }
-            return mCursor;
-
         }
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor;
 
     }
+
+}
