@@ -305,20 +305,19 @@ public final class Logger {
         String level = "";
         for (int i = methodCount; i > 0; i--) {
             int stackIndex = i + 5;
-            StringBuilder builder = new StringBuilder();
-            builder.append("║ ")
-                    .append(level)
-                    .append(getSimpleClassName(trace[stackIndex].getClassName()))
-                    .append(".")
-                    .append(trace[stackIndex].getMethodName())
-                    .append(" ")
-                    .append(" (")
-                    .append(trace[stackIndex].getFileName())
-                    .append(":")
-                    .append(trace[stackIndex].getLineNumber())
-                    .append(")");
+            String builder = "║ " +
+                    level +
+                    getSimpleClassName(trace[stackIndex].getClassName()) +
+                    "." +
+                    trace[stackIndex].getMethodName() +
+                    " " +
+                    " (" +
+                    trace[stackIndex].getFileName() +
+                    ":" +
+                    trace[stackIndex].getLineNumber() +
+                    ")";
             level += "   ";
-            logChunk(logType, tag, builder.toString());
+            logChunk(logType, tag, builder);
         }
     }
 
