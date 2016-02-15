@@ -46,5 +46,11 @@
     <string name="score" translatable="false">Scores</string>
     <string name="date" translatable="false">Date</string>
     <string name="empty" translatable="false">Empty</string>
+    <string name="league_serie_a">Seria A</string>
+    <string name="league_premier">Premier League</string>
+    <string name="league_uefa">UEFA Champions League</string>
+    <string name="league_primera">Primera Division</string>
+    <string name="league_bundesliga">Bundesliga</string>
+    <string name="league_error">Not known League Please report</string>
 
 </resources>

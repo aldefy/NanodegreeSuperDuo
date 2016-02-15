@@ -27,20 +27,20 @@ public class CommonUtils {
     public static final int BUNDESLIGA = 351;
     public static final String LOG_TAG = "FootballTag";
 
-    public static String getLeague(int league_num) {
+    public static String getLeague(Context context,int league_num) {
         switch (league_num) {
             case SERIE_A:
-                return "Seria A";
+                return context.getString(R.string.league_serie_a);
             case PREMIER_LEGAUE:
-                return "Premier League";
+                return context.getString(R.string.league_premier);
             case CHAMPIONS_LEAGUE:
-                return "UEFA Champions League";
+                return context.getString(R.string.league_uefa);
             case PRIMERA_DIVISION:
-                return "Primera Division";
+                return context.getString(R.string.league_primera);
             case BUNDESLIGA:
-                return "Bundesliga";
+                return context.getString(R.string.league_bundesliga);
             default:
-                return "Not known League Please report";
+                return context.getString(R.string.league_error);
         }
     }
 
